@@ -3,6 +3,7 @@ import User from '@/models/user';
 import Category from '@/models/category';
 import Article from '@/models/article';
 import ArticleStat from '@/models/article-stat';
+import FriendLink from '@/models/friend-link';
 import DataHelper from '@/helpers/data';
 
 async function initAccount() {
@@ -30,6 +31,7 @@ async function initDB() {
         Category.sync({ force: false }),
         Article.sync({ force: false }),
         ArticleStat.sync({ force: false }),
+        FriendLink.sync({ force: false }),
     ]);
     await initAccount();
 }

@@ -13,7 +13,7 @@ export default defineOptionalRoute({
     handler: async (req): Promise<GetArticlesResp> => {
         const { page = 1, size = 20 } = req.query as GetArticlesQuery;
         const articles = await Article.findAll({
-            order: [['updatedAt', 'desc']],
+            order: [['isActive', 'desc'], ['createdAt', 'desc']],
             limit: size,
             offset: (page - 1) * size,
         });

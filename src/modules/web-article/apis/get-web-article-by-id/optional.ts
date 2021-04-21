@@ -13,9 +13,9 @@ import Category from '@/models/category';
 import User from '@/models/user';
 import { GetWebArticleByIdResp } from './default';
 
-export default defineOptionalRoute({
+export default defineOptionalRoute<{ id: number }>({
     handler: async (req): Promise<GetWebArticleByIdResp> => {
-        const { id } = req.params as { id: number };
+        const { id } = req.params;
 
         const article = await Article.findByPk(id);
         if (!article || !article.isActive) {

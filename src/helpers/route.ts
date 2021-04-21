@@ -1,4 +1,4 @@
-import { ServerRoute, RouteOptions, Lifecycle, Request, ResponseToolkit } from '@hapi/hapi';
+import { ServerRoute, RouteOptions, Lifecycle, Request, ResponseToolkit, HandlerDecorations } from '@hapi/hapi';
 import { notFound, badRequest, badImplementation } from '@hapi/boom';
 import { errorResponse, NotFound, BadRequest } from '@/helpers/error';
 import logger from '@/helpers/logger';
@@ -46,10 +46,17 @@ export function defineRoute(route: ServerRoute): ServerRoute {
     return route;
 };
 
-export interface OptionalRoute {
-    handler: ServerRoute['handler'];
+type KRequest<PR, Q, PL> = Request & {
+    params: Request['params'] & PR;
+    query: Request['query'] & Q;
+    payload: Request['payload'] & PL;
+};
+type KHandler<PR, Q, PL> = (request: KRequest<PR, Q, PL>, h: ResponseToolkit, err?: Error | undefined) => Lifecycle.ReturnValue;
+
+export interface OptionalRoute<PR, Q, PL> {
+    handler: KHandler<PR, Q, PL> | HandlerDecorations | undefined;
     options?: ServerRoute['options'];
 }
-export function defineOptionalRoute(route: OptionalRoute): OptionalRoute {
+export function defineOptionalRoute<PR = {}, Q = {}, PL = {}>(route: OptionalRoute<PR, Q, PL>): OptionalRoute<PR, Q, PL> {
     return route;
 };
