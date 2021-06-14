@@ -20,6 +20,6 @@ export default defineOptionalRoute({
             id,
             name: user.name,
             email: user.email,
-        }
+        };
     },
 });

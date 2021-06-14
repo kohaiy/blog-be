@@ -4,6 +4,7 @@ import Category from '@/models/category';
 import Article from '@/models/article';
 import ArticleStat from '@/models/article-stat';
 import FriendLink from '@/models/friend-link';
+import SysInfo from '@/models/sys-info';
 import DataHelper from '@/helpers/data';
 
 async function initAccount() {
@@ -25,6 +26,7 @@ async function initAccount() {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 async function initDB() {
     await Promise.all([
         User.sync({ force: false }),
@@ -32,6 +34,7 @@ async function initDB() {
         Article.sync({ force: false }),
         ArticleStat.sync({ force: false }),
         FriendLink.sync({ force: false }),
+        SysInfo.sync({ force: false }),
     ]);
     await initAccount();
 }

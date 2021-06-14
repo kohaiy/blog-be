@@ -13,7 +13,7 @@ interface CategoryAttributes {
     description: string | null;
 }
 
-interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id'> { }
+type CategoryCreationAttributes = Optional<CategoryAttributes, 'id'>
 
 export default class Category extends Model<CategoryAttributes, CategoryCreationAttributes> implements CategoryAttributes {
     public id!: number;

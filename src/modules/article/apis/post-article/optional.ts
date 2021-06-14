@@ -15,7 +15,7 @@ import { PostArticleBody } from './default';
 export default defineOptionalRoute({
     handler: async (req) => {
         const { id } = req.auth.credentials as { id: number };
-        const { name, introduction, content, tags, categoryId } = req.payload as PostArticleBody;
+        const { name, linkName, abstract, content, tags, categoryId } = req.payload as PostArticleBody;
 
         // 判断分类id是否存在
         const checkCategory = await Category.findByPk(categoryId);
@@ -25,9 +25,9 @@ export default defineOptionalRoute({
 
         const articleStat = new ArticleStat();
         const article = new Article({
-            name, content, tags, categoryId,
+            name, linkName, content, tags, categoryId,
             userId: id,
-            introduction: introduction || content.substr(0, 500),
+            abstract: abstract || content.substr(0, 500),
             articleStatId: articleStat.id,
             isActive: true,
         });

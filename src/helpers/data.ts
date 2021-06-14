@@ -13,7 +13,7 @@ export default class DataHelper {
     }
 
     static generateSlat() {
-        return `${Date.now()}${Math.floor(Math.random() * 5000 + 4000)}`
+        return `${Date.now()}${Math.floor(Math.random() * 5000 + 4000)}`;
     }
 
     static generateToken(payload: Record<string, any>): string {

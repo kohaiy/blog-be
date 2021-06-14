@@ -2,6 +2,7 @@ import * as HapiSwagger from 'hapi-swagger';
 import { Options as SequelizeOptions } from 'sequelize';
 import logger from '@/helpers/logger';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pack = require('../package');
 
 const swaggerOptions: HapiSwagger.RegisterOptions = {

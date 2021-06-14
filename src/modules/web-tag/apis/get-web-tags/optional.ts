@@ -18,16 +18,18 @@ export default defineOptionalRoute({
         const map = new Map<string, GetWebTagsResp>();
         articles.forEach(({ tags }) => {
             tags.forEach(tag => {
-                if (!map.has(tag)) {
-                    map.set(tag, { name: tag, total: 0 });
+                let t = map.get(tag);
+                if (!t) {
+                    t = { name: tag, total: 0 };
+                    map.set(tag, t);
                 }
-                map.get(tag)!.total += 1;
-            })
+                t.total += 1;
+            });
         });
 
         const tags = [...map.values()].slice(0, 100);
         tags.sort((a, b) => b.total - a.total);
 
-        return tags
+        return tags;
     },
 });

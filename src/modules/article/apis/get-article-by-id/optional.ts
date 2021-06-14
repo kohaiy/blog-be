@@ -21,6 +21,7 @@ export default defineOptionalRoute({
         return {
             id: article.id,
             name: article.name,
+            linkName: article.linkName,
             content: article.content,
             tags: article.tags,
             categoryId: article.categoryId,

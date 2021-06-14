@@ -15,7 +15,7 @@ interface FriendLinkAttributes {
     order: number;
 }
 
-interface FriendLinkCreationAttributes extends Optional<FriendLinkAttributes, 'id'> { }
+type FriendLinkCreationAttributes = Optional<FriendLinkAttributes, 'id'>
 
 export default class FriendLink extends Model<FriendLinkAttributes, FriendLinkCreationAttributes> implements FriendLinkAttributes {
     public id!: number;

@@ -2,7 +2,7 @@
  * title     : 获取文章详情
  * path      : /web/article/{id}
  * created at: 2021/4/4 下午10:42:27
- * updated at: 2021/4/11 下午9:19:28
+ * updated at: 2021/5/13 下午10:12:02
  */
 import * as Joi from 'joi';
 import { defineRoute } from '@/helpers/route';
@@ -13,6 +13,8 @@ export interface GetWebArticleByIdResp {
     categoryId: number;
     categoryName: string;
     name: string;
+    linkName: string;
+    abstract: string;
     content: string;
     tags: string[];
     updatedAt: Date;
@@ -27,6 +29,8 @@ const GetWebArticleByIdRespVo = Joi.object({
     categoryId: Joi.number().required(),
     categoryName: Joi.string().required(),
     name: Joi.string().required(),
+    linkName: Joi.string().required(),
+    abstract: Joi.string().required(),
     content: Joi.string().required(),
     tags: Joi.array().items(Joi.string()),
     updatedAt: Joi.date().required(),
@@ -43,7 +47,7 @@ export default defineRoute({
         tags: ['api', 'web-article'],
         validate: {
             params: Joi.object({
-                id: Joi.number().allow(null)
+                id: Joi.string().allow(null).allow('')
             })
         },
         response: {

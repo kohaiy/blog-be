@@ -11,13 +11,14 @@ export interface ArticleAttributes {
     categoryId: number;
     articleStatId: number;
     name: string;
+    linkName: string;
     content: string;
     tags: string[];
-    introduction: string;
+    abstract: string;
     isActive: boolean;
 }
 
-interface ArticleCreationAttributes extends Optional<ArticleAttributes, 'id'> { }
+type ArticleCreationAttributes = Optional<ArticleAttributes, 'id'>
 
 export default class Article extends Model<ArticleAttributes, ArticleCreationAttributes> implements ArticleAttributes {
     public id!: number;
@@ -25,9 +26,10 @@ export default class Article extends Model<ArticleAttributes, ArticleCreationAtt
     public categoryId!: number;
     public articleStatId!: number;
     public name!: string;
+    public linkName!: string;
     public content!: string;
     public tags!: string[];
-    public introduction!: string;
+    public abstract!: string;
     public isActive!: boolean;
 
     public readonly createdAt!: Date;
@@ -58,6 +60,10 @@ Article.init(
             type: new DataTypes.STRING(128),
             allowNull: false,
         },
+        linkName: {
+            type: new DataTypes.STRING(128),
+            allowNull: false,
+        },
         content: {
             type: new DataTypes.TEXT,
             allowNull: false,
@@ -67,7 +73,7 @@ Article.init(
             allowNull: false,
             defaultValue: () => [],
         },
-        introduction: {
+        abstract: {
             type: DataTypes.STRING(500),
             allowNull: false,
         },

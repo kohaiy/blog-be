@@ -18,4 +18,4 @@ export async function openTransaction<T>(handler: (transaction: Transaction) => 
         await tx?.rollback();
         throw err;
     }
-};
+}

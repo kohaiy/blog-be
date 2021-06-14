@@ -39,6 +39,6 @@ const AuthPlugin: ServerRegisterPluginObject<any> = {
         }
     }
 
-}
+};
 
 export default AuthPlugin;

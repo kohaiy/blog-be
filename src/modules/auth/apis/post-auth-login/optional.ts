@@ -34,6 +34,6 @@ export default defineOptionalRoute({
             token: DataHelper.generateToken({
                 id: user.id,
             }),
-        }
+        };
     },
 });

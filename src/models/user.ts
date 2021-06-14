@@ -13,7 +13,7 @@ interface UserAttributes {
     slat: string;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
+type UserCreationAttributes = Optional<UserAttributes, 'id'>
 
 export default class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
     public id!: number;

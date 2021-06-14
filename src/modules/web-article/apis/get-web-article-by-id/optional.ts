@@ -13,11 +13,23 @@ import Category from '@/models/category';
 import User from '@/models/user';
 import { GetWebArticleByIdResp } from './default';
 
-export default defineOptionalRoute<{ id: number }>({
+export default defineOptionalRoute<{ id: string }>({
     handler: async (req): Promise<GetWebArticleByIdResp> => {
-        const { id } = req.params;
+        const { id: param } = req.params;
+        const isId = /^\d+$/.test(param);
+        let id = 0;
+        let linkName = '';
+        let article: Article | null;
+        if (isId) {
+            id = Number(param);
+            article = await Article.findByPk(id);
+        } else {
+            linkName = param;
+            article = await Article.findOne({
+                where: { linkName }
+            });
+        }
 
-        const article = await Article.findByPk(id);
         if (!article || !article.isActive) {
             throw new NotFound('文章不存在');
         }
@@ -31,6 +43,7 @@ export default defineOptionalRoute<{ id: number }>({
             });
         // viewTotal 加一
         await openTransaction(async (transaction) => {
+            if (!article) { return; }
             articleStat.viewTotal += 1;
             await articleStat.save({ transaction });
             if (articleStat.id !== article.articleStatId) {
@@ -45,6 +58,8 @@ export default defineOptionalRoute<{ id: number }>({
         return {
             id,
             name: article.name,
+            linkName: article.linkName,
+            abstract: article.abstract,
             content: article.content,
             tags: article.tags,
             categoryId: article.categoryId,

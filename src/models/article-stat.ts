@@ -11,7 +11,7 @@ interface ArticleStatAttributes {
     likeTotal: number;
 }
 
-interface ArticleStatCreationAttributes extends Optional<ArticleStatAttributes, 'id'> { }
+type ArticleStatCreationAttributes = Optional<ArticleStatAttributes, 'id'>
 
 export default class ArticleStat extends Model<ArticleStatAttributes, ArticleStatCreationAttributes> implements ArticleStatAttributes {
     public id!: number;

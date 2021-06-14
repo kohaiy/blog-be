@@ -1,6 +1,6 @@
 {
   "name": "kohai-blog-be",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "The backend server of the kohai-blog.",
   "main": "dist/index.js",
   "scripts": {
@@ -11,6 +11,7 @@
     "nodemon:build": "nodemon --exec ./node_modules/.bin/ts-node -r tsconfig-paths/register ./src/index.ts --files",
     "init-api-generator": "kohapi-generator init",
     "generate-api": "kohapi-generator yapi-hapi-ts",
+    "lint": "eslint src/* --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "_moduleAliases": {
@@ -33,18 +34,23 @@
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mysql2": "^2.2.5",
+    "puppeteer": "^9.0.0",
     "sequelize": "^6.5.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@kohapi/generator": "^0.0.1-alpha.6",
+    "@kohapi/generator": "^0.0.1-alpha.9",
     "@types/hapi__boom": "^9.0.1",
     "@types/hapi__hapi": "^20.0.5",
+    "@types/hapi__inert": "^5.2.2",
     "@types/hapi__joi": "^17.1.6",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/node": "^14.14.25",
     "@types/validator": "^13.1.3",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
     "cross-env": "^7.0.3",
+    "eslint": "^7.26.0",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",

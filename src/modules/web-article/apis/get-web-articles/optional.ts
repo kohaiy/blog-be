@@ -10,9 +10,9 @@ import Article, { ArticleAttributes } from '@/models/article';
 import Category from '@/models/category';
 import { GetWebArticlesQuery, GetWebArticlesResp } from './default';
 
-export default defineOptionalRoute({
+export default defineOptionalRoute<undefined, GetWebArticlesQuery>({
     handler: async (req): Promise<GetWebArticlesResp> => {
-        const { page = 1, size = 20, tag } = req.query as GetWebArticlesQuery;
+        const { page = 1, size = 20, tag } = req.query;
 
         const where: Sequelize.WhereOptions<ArticleAttributes> = {
             isActive: true,
@@ -29,10 +29,10 @@ export default defineOptionalRoute({
         });
 
         const list = await Promise.all(
-            articles.map(async ({ id, name, introduction, tags, categoryId, createdAt }) => {
+            articles.map(async ({ id, name, linkName, abstract, tags, categoryId, createdAt }) => {
                 const category = await Category.findByPk(categoryId);
                 return {
-                    id, name, introduction, tags, categoryId,
+                    id, name, linkName, abstract, tags, categoryId,
                     createdAt,
                     categoryName: category?.name || '',
                 };
@@ -41,7 +41,7 @@ export default defineOptionalRoute({
 
         const total = await Article.count({
             where,
-        })
+        });
 
         return {
             total,

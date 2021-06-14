@@ -4,7 +4,7 @@ import Config from '@/config';
 import AuthPlugin from './auth';
 
 export default class Plugins {
-    public static async swagger(server: Hapi.Server) {
+    public static async swagger(server: Hapi.Server): Promise<void> {
         logger.info('Plugins - register swagger ui');
 
         try {
@@ -25,6 +25,11 @@ export default class Plugins {
     public static async registerAll(server: Hapi.Server): Promise<Error | any> {
         if (process.env.NODE_ENV === 'development') {
             await Plugins.swagger(server);
+        } else {
+            await Plugins.register(server, [
+                require('@hapi/vision'),
+                require('@hapi/inert'),
+            ]);
         }
         await server.register(AuthPlugin);
     }

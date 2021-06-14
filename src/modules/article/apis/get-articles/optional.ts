@@ -20,7 +20,7 @@ export default defineOptionalRoute({
         const total = await Article.count();
 
         const list = await Promise.all(
-            articles.map(async ({ id, name, introduction, content, tags, categoryId, isActive }) => {
+            articles.map(async ({ id, name, linkName, abstract, content, tags, categoryId, isActive }) => {
                 const category = await Category.findByPk(categoryId);
                 const categoryIds: number[] = [];
                 if (category) {
@@ -30,10 +30,10 @@ export default defineOptionalRoute({
                     }
                 }
                 return {
-                    id, name, introduction, content, tags, categoryId, isActive,
+                    id, name, linkName, abstract, content, tags, categoryId, isActive,
                     categoryIds,
                     categoryName: category?.name || ''
-                }
+                };
             }),
         );
 

@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as sysPath from 'path';
 import * as Hapi from '@hapi/hapi';
 import * as Dotenv from 'dotenv';
 import Plugins from '@/plugins';
@@ -12,7 +14,7 @@ export default class Server {
         try {
             Dotenv.config();
 
-            await boots();
+            boots();
 
             Server._instance = new Hapi.Server({
                 host: process.env.SERVER_HOST,
@@ -20,7 +22,9 @@ export default class Server {
             });
 
             // 添加校验
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             Server._instance.validator(require('joi'));
+            await Plugins.registerAll(Server._instance);
 
             const routes = requireAll<Hapi.ServerRoute>({
                 dirname: './modules/**/apis/**',
@@ -28,9 +32,32 @@ export default class Server {
             });
             console.log(routes.map(({ method, path }, index) => `[${index}] ${method} \t${path}`).join('\n'));
 
-            await Server._instance.route(routes);
+            Server._instance.route(routes);
 
-            await Plugins.registerAll(Server._instance);
+            const publicPath = sysPath.join(sysPath.resolve(), process.env.PUBLIC_PATH || 'public');
+            Server._instance.route({
+                method: 'GET',
+                path: '/{path*}',
+                handler(req, h: any) {
+                    let filePath = sysPath.join(publicPath, req.path);
+                    
+                    if (fs.existsSync(filePath)) {
+                        const stat = fs.statSync(filePath);
+                        
+                        if (stat.isFile()) { return h.file(filePath, { confine: false }); }
+                        if (stat.isDirectory()) {
+                            filePath = sysPath.join(publicPath, req.path, 'index.html');
+                            if (fs.existsSync(filePath)) {
+                                return h.file(filePath, { confine: false });
+                            }
+                        }
+                    }
+                    return h.file(sysPath.join(publicPath, 'index.html'), {
+                        confine: false,
+                    });
+                },
+                options: { auth: false },
+            });
 
             await Server._instance.start();
             logger.info(

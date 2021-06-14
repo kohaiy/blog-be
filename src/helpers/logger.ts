@@ -14,7 +14,7 @@ export class ApiLogger {
                     const { timestamp, level, message, ...args } = info;
 
                     return `${timestamp} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''
-                        }`;
+                    }`;
                 })
             ),
             level: process.env.LOG_LEVEL,

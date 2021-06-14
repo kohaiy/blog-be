@@ -2,7 +2,7 @@
  * title     : 获取文章列表
  * path      : /web/articles
  * created at: 2021/4/4 下午10:41:06
- * updated at: 2021/4/11 下午10:28:24
+ * updated at: 2021/5/13 下午9:39:34
  */
 import * as Joi from 'joi';
 import { defineRoute } from '@/helpers/route';
@@ -16,7 +16,8 @@ export interface GetWebArticlesQuery {
 export interface GetWebArticlesRespList {
     id: number;
     name: string;
-    introduction: string;
+    linkName: string;
+    abstract: string;
     tags: string[];
     categoryId: number;
     categoryName: string;
@@ -30,7 +31,8 @@ export interface GetWebArticlesResp {
 const GetWebArticlesRespListVo = Joi.object({
     id: Joi.number().required(),
     name: Joi.string().required(),
-    introduction: Joi.string().required(),
+    linkName: Joi.string().required(),
+    abstract: Joi.string().required(),
     tags: Joi.array().items(Joi.string()),
     categoryId: Joi.number().required(),
     categoryName: Joi.string().required(),

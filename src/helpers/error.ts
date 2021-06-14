@@ -1,4 +1,4 @@
-import * as Joi from "joi";
+import * as Joi from 'joi';
 
 export class Internal extends Error { }
 export class BadRequest extends Error { }

@@ -14,7 +14,7 @@ import { PutArticleByIdBody } from './default';
 export default defineOptionalRoute({
     handler: async (req) => {
         const { id } = req.params as { id: number };
-        const { name, introduction, content, tags, categoryId } = req.payload as PutArticleByIdBody;
+        const { name, linkName, abstract, content, tags, categoryId } = req.payload as PutArticleByIdBody;
 
         const article = await Article.findByPk(id);
         if (!article) {
@@ -28,7 +28,8 @@ export default defineOptionalRoute({
         }
 
         article.name = name;
-        article.introduction = introduction;
+        article.linkName = linkName;
+        article.abstract = abstract;
         article.content = content;
         article.tags = tags;
         article.categoryId = categoryId;

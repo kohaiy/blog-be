@@ -39,5 +39,6 @@ export default function requireAll<T>(config: RequireAllConfig): T[] {
         }
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     return files.map(f => require(f).default);
 }

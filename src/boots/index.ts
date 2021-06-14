@@ -1,5 +1,5 @@
 import initDB from './init-db';
 
-export default function () {
+export default function ():void {
     initDB();
-};
+}

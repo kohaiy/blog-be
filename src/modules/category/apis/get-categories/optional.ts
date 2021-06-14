@@ -8,7 +8,7 @@ import { defineOptionalRoute } from '@/helpers/route';
 import Category from '@/models/category';
 
 export default defineOptionalRoute({
-    handler: async (req) => {
+    handler: async () => {
         const categories = await Category.findAll();
 
         return categories.map(({ id, name, pid, icon, description }) => ({

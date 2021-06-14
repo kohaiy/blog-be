@@ -41,10 +41,10 @@ export function defineRoute(route: ServerRoute): ServerRoute {
                     }
                     return badImplementation(error.message);
                 });
-        }
+        };
     }
     return route;
-};
+}
 
 type KRequest<PR, Q, PL> = Request & {
     params: Request['params'] & PR;
@@ -57,6 +57,6 @@ export interface OptionalRoute<PR, Q, PL> {
     handler: KHandler<PR, Q, PL> | HandlerDecorations | undefined;
     options?: ServerRoute['options'];
 }
-export function defineOptionalRoute<PR = {}, Q = {}, PL = {}>(route: OptionalRoute<PR, Q, PL>): OptionalRoute<PR, Q, PL> {
+export function defineOptionalRoute<PR = Record<string, any>, Q = Record<string, any>, PL = Record<string, any>>(route: OptionalRoute<PR, Q, PL>): OptionalRoute<PR, Q, PL> {
     return route;
-};
+}
